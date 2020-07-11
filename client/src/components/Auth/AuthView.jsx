@@ -33,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-    },
+    }
 }))
 
 const AuthView = ({
@@ -57,14 +57,17 @@ const AuthView = ({
                 <Avatar className={classes.avatar}>
                     <LockOutlinedIcon />
                 </Avatar>
-                <Typography component='h1'
-                    variant='h5'>
+                
+                <Typography component='h1' variant='h5'>
                     {isSignIn && 'Sign In'}
                     {isSignUp && 'Sign Up'}
                 </Typography>
-                <form className={classes.form}
+
+                <form
+                    className={classes.form}
                     noValidate
                     onSubmit={onSubmit}>
+
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -76,8 +79,8 @@ const AuthView = ({
                         autoComplete='off'
                         autoFocus
                         value={email}
-                        onChange={e => onChange(e)}
-                    />
+                        onChange={e => onChange(e)} />
+
                     {isSignUp && <TextField
                         variant='outlined'
                         margin='normal'
@@ -89,8 +92,8 @@ const AuthView = ({
                         autoComplete='off'
                         autoFocus
                         value={username}
-                        onChange={e => onChange(e)}
-                    />}
+                        onChange={e => onChange(e)} />}
+
                     <TextField
                         variant='outlined'
                         margin='normal'
@@ -102,33 +105,29 @@ const AuthView = ({
                         id='password'
                         autoComplete='off'
                         value={password}
-                        onChange={e => onChange(e)}
-                    />
+                        onChange={e => onChange(e)} />
+
                     <FormControlLabel
-                        control={<Checkbox
-                            value='remember'
-                            color='primary' />}
-                        label='Remember me'
-                    />
+                        control={<Checkbox value='remember' color='primary' />}
+                        label='Remember me' />
+
                     <Button
                         type='submit'
                         fullWidth
                         variant='contained'
                         color='primary'
                         className={classes.submit}
-                        onClick={e => onSubmit(e)}
-                    >
+                        onClick={e => onSubmit(e)}>
                         {isSignIn && 'Sign In'}
                         {isSignUp && 'Sign Up'}
                     </Button>
+
                     <Grid container>
                         <Grid item>
-                            {isSignIn && <Link href={signUpLink}
-                                variant='body2'>
+                            {isSignIn && <Link href={signUpLink} variant='body2'>
                                 Don't have an account? Sign Up
                             </Link>}
-                            {isSignUp && <Link href={signInLink}
-                                variant='body2'>
+                            {isSignUp && <Link href={signInLink} variant='body2'>
                                 Have an account? Sign In
                             </Link>}
                         </Grid>

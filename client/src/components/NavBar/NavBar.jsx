@@ -16,6 +16,7 @@ import { signout } from '../../actions/auth'
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        marginBottom: theme.spacing(2)
     },
     menuButton: {
         marginRight: theme.spacing(2),
@@ -27,19 +28,35 @@ const useStyles = makeStyles((theme) => ({
 
 const NavBar = ({ isAuthenticated, signout }) => {
     const classes = useStyles()
-    console.log(isAuthenticated)
+
     return (
         <div className={classes.root}>
             <AppBar position='static'>
                 <Toolbar>
-                    <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='menu'>
+                    <IconButton edge='start'
+                        className={classes.menuButton}
+                        color='inherit'
+                        href='/'>
                         <MenuIcon />
                     </IconButton>
+
                     <Typography variant='h6' className={classes.title}>
                         MERN Boilerplate
                     </Typography>
-                    {isAuthenticated ? <Button onClick={e => signout()} color='inherit'>Logout</Button> :
-                        <Button href='/signin' color='inherit'>Login</Button>}
+
+                    <Button color='inherit'
+                        href='/templates/'>
+                        Templates
+                    </Button>
+
+                    {isAuthenticated ?
+                        <Button onClick={e => signout()} color='inherit'>
+                            Logout
+                      </Button> :
+                        <Button href='/signin'
+                            color='inherit'>
+                            Login
+                          </Button>}
                 </Toolbar>
             </AppBar>
         </div >
