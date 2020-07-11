@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Redirect } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
@@ -11,7 +12,8 @@ const Auth = ({
     signup,
     signin,
     isSignUp,
-    isSignIn
+    isSignIn,
+    isAuthenticated
 }) => {
     const [formData, setFormData] = useState({
         username: '',
@@ -25,8 +27,16 @@ const Auth = ({
 
     const onSubmit = e => {
         e.preventDefault()
-        isSignUp && signup({ username, email, password })
-        isSignIn && signin({ email, password })
+        if (isSignUp) {
+            signup({ username, email, password })
+        }
+        if (isSignIn) {
+            signin({ email, password })
+        }
+    }
+
+    if (isAuthenticated) {
+        return <Redirect to='/' />
     }
 
     return <AuthView
@@ -48,10 +58,15 @@ Auth.propTypes = {
     signInLink: PropTypes.string,
     signUpLink: PropTypes.string,
     signup: PropTypes.func.isRequired,
-    signin: PropTypes.func.isRequired
+    signin: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
 }
 
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+  })
+
 export default connect(
-    null,
+    mapStateToProps,
     { setAlert, signup, signin }
 )(Auth)

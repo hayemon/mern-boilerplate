@@ -1,4 +1,6 @@
 import React from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 import {
     AppBar,
     Toolbar,
@@ -8,6 +10,8 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import { makeStyles } from '@material-ui/core/styles'
+
+import { signout } from '../../actions/auth'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -21,9 +25,9 @@ const useStyles = makeStyles((theme) => ({
     },
 }))
 
-const NavBar = () => {
+const NavBar = ({ isAuthenticated, signout }) => {
     const classes = useStyles()
-
+    console.log(isAuthenticated)
     return (
         <div className={classes.root}>
             <AppBar position='static'>
@@ -34,11 +38,24 @@ const NavBar = () => {
                     <Typography variant='h6' className={classes.title}>
                         MERN Boilerplate
                     </Typography>
-                    <Button href='/signin' color='inherit'>Login</Button>
+                    {isAuthenticated ? <Button onClick={e => signout()} color='inherit'>Logout</Button> :
+                        <Button href='/signin' color='inherit'>Login</Button>}
                 </Toolbar>
             </AppBar>
         </div >
     )
 }
 
-export default NavBar
+NavBar.propTypes = {
+    signout: PropTypes.func.isRequired,
+    isAuthenticated: PropTypes.bool
+}
+
+const mapStateToProps = (state) => ({
+    isAuthenticated: state.auth.isAuthenticated
+})
+
+export default connect(
+    mapStateToProps,
+    { signout }
+)(NavBar)
